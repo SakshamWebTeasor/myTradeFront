@@ -1,19 +1,71 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Login from "./Test";
+import ErrorPage from "./ErrorPage";
+import AuthRoot from "./Route/AuthRoot";
+import OpenRoot from "./Route/OpenRoot";
+import TextAlert from "./Component/TextAlert";
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <OpenRoot />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Login />,
+      },
+      {
+        path: "/user",
+        element: <AuthRoot />,
+        children: [
+          {
+            path: "/user",
+            //Absolute route path "/" nested under path "/user" is not valid. An absolute child route path must start with the combined path of all its parent routes i.e. "/user" instead of "/".
+            element: <>Hii</>,
+          },
+          {
+            path: "/user/dashboard",
+            element: <TextAlert />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: <AuthRoot />,
+        children: [
+          {
+            path: "/admin",
+            element: <>Hii3</>,
+          },
+          {
+            path: "/admin/dashboard",
+            element: <>Hii4</>,
+          },
+        ],
+      },
+      {
+        path: "/superAdmin",
+        element: <AuthRoot />,
+      },
+    ],
+  },
+]);
+
+const portalDiv = document.getElementById("root")!;
+
+ReactDOM.createRoot(portalDiv).render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
