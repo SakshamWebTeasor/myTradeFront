@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
@@ -10,6 +9,7 @@ import ErrorPage from "./ErrorPage";
 import AuthRoot from "./Route/AuthRoot";
 import OpenRoot from "./Route/OpenRoot";
 import TextAlert from "./Component/TextAlert";
+import ThemeProvider from "./ThemeProvider";
 
 const router = createBrowserRouter([
   {
@@ -61,11 +61,13 @@ const router = createBrowserRouter([
 const portalDiv = document.getElementById("root")!;
 
 ReactDOM.createRoot(portalDiv).render(
-  <React.StrictMode>
-    <Provider store={store}>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider>
       <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
+    </ThemeProvider>
+  </Provider>
+  // </React.StrictMode>
 );
 
 reportWebVitals();
