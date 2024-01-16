@@ -4,6 +4,8 @@ import { showSwal } from "../Component/ShowAlert";
 import { logout } from "../redux/action";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
+import Header from "../Component/Admin/Header";
+import Footer from "../Component/Admin/Footer";
 
 type Props = {};
 
@@ -23,27 +25,29 @@ function AuthRoot({}: Props) {
         showSwal("Token Expired", "Loggin Out", 400, () => navigate("/"));
       }
       if (
-        window.location.pathname.split("/")[1] != loginDetail.role ||
-        window.location.pathname.split("/")[1] == "superAdmin"
+        window.location.pathname.split("/")[1] !== loginDetail.role ||
+        window.location.pathname.split("/")[1] === "superAdmin"
       ) {
         let roleToNavigate =
-          loginDetail.role == "admin" || loginDetail.role == "superAdmin"
+          loginDetail.role === "admin" || loginDetail.role === "superAdmin"
             ? "admin"
             : "user";
         navigate(`/${roleToNavigate}/dashboard`);
       }
-      if (window.location.pathname.split("/")[2] == undefined) {
+      if (window.location.pathname.split("/")[2] === undefined) {
         navigate(`/${window.location.pathname.split("/")[1]}/dashboard`);
       }
     } else {
       console.log("No Token Found");
       dispatch(logout());
-      showSwal("No Token Found", "Loggin Out", 400, () => navigate("/"));
+      showSwal("No Token Found", "Loggin Out", 400, () => navigate("/login"));
     }
   }, [loginToken]);
   return (
     <>
+      <Header />
       <Outlet />
+      <Footer />
     </>
   );
 }

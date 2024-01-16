@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 type Props = {};
 
-function OpenRoot() {
+function OpenRoot({}: Props) {
   return (
     <>
       <Outlet />

@@ -19,8 +19,8 @@ const Login = () => {
       let response = await login(myData);
       dispatch(loginSuccess(response.data.user, response.data.token));
       let roleToNavigate =
-        response.data.user.role == "admin" ||
-        response.data.user.role == "superAdmin"
+        response.data.user.role === "admin" ||
+        response.data.user.role === "superAdmin"
           ? "admin"
           : "user";
       showSwal("Success", response.data.message, 200, () =>
