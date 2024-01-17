@@ -1,5 +1,5 @@
 import axios from "axios";
-import { loginUserApi } from "../Interface";
+import { loginUserApi, registerUserApi } from "../Interface";
 
 export const api = axios.create({
     baseURL: "http://localhost:4000",
@@ -11,3 +11,4 @@ export const api = axios.create({
 })
 
 export const login = (data: loginUserApi) => api.post("/api/login", data)
+export const register = (data: registerUserApi) => api.post("/api/register", data)

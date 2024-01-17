@@ -4,12 +4,13 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Login from "./Test";
+import Login from "./Component/Public/Login";
 import ErrorPage from "./ErrorPage";
 import AuthRoot from "./Route/AuthRoot";
 import OpenRoot from "./Route/OpenRoot";
 import TextAlert from "./Component/TextAlert";
 import ThemeProvider from "./ThemeProvider";
+import Register from "./Component/Public/Register";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
       {
         path: "/user",

@@ -1,19 +1,23 @@
-import React from "react";
-import { login } from "./Api";
-import { loginUserApi } from "./Interface";
+import React, { useState } from "react";
+import { login } from "../../Api";
+import { loginUserApi } from "../../Interface";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "./redux/action";
+import { loginSuccess } from "../../redux/action";
 import { useNavigate } from "react-router-dom";
-import { showSwal } from "./Component/ShowAlert";
+import { showSwal } from "../ShowAlert";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loginDetails, setLoginDetails] = useState({
+    username: "",
+    password: "",
+  });
+  console.log(loginDetails);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    let email = "" + data.get("username");
-    let password = "" + data.get("password");
+    let email = loginDetails.username;
+    let password = loginDetails.password;
     const myData: loginUserApi = { email, password };
     try {
       let response = await login(myData);
@@ -32,6 +36,16 @@ const Login = () => {
     }
   };
 
+  const handleInputChange = (
+    field: string,
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setLoginDetails((prevDetail) => ({
+      ...prevDetail,
+      [field]: e.target.value,
+    }));
+  };
+
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-md w-96">
@@ -48,6 +62,7 @@ const Login = () => {
               type="text"
               id="username"
               name="username"
+              onChange={(e) => handleInputChange("username", e)}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -62,6 +77,7 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
+              onChange={(e) => handleInputChange("password", e)}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -72,6 +88,14 @@ const Login = () => {
             Login
           </button>
         </form>
+        <div className="flex justify-end">
+          <button
+            className="my-4 bg-blue-500 text-white p-1 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue"
+            onClick={() => navigate("/register")}
+          >
+            Go To Register Page
+          </button>
+        </div>
       </div>
     </div>
   );
