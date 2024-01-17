@@ -1,12 +1,11 @@
 import React from "react";
-import ButtonMemo from "./ButtonMemo";
-import ButtonRef from "./ButtonRef";
-import ButtonUseContext from "./ButtonUseContext";
-import ButtonReducerIncDec from "./ButtonReducerIncDec";
-import ReducerTodo from "./ReducerTodo";
+import ButtonMemo from "./EasyDev/ButtonMemo";
+import ButtonRef from "./EasyDev/ButtonRef";
+import ButtonUseContext from "./EasyDev/ButtonUseContext";
+import ButtonReducerIncDec from "./EasyDev/ButtonReducerIncDec";
+import ReducerTodo from "./EasyDev/ReducerTodo";
 
-interface HeaderProps {
-}
+interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = ({}) => {
   return (
