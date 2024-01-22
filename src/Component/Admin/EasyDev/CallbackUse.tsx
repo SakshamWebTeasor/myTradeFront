@@ -18,7 +18,6 @@ function List({
   const [items, setItems] = useState<number[]>([]);
   useEffect(() => {
     setItems(getItems(2));
-    console.log("change in List1");
   }, [getItems]);
   return (
     <>
@@ -35,7 +34,6 @@ function List2({ getItems, dark }: { getItems: number[]; dark: boolean }) {
   const [items, setItems] = useState<number[]>([]);
   useEffect(() => {
     setItems(getItems);
-    console.log("change in List2");
   }, [getItems]);
   return (
     <>

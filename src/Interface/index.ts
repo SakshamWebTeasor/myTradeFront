@@ -47,3 +47,18 @@ export interface registerUserErr {
   fname?:string
   lname?:string
 }
+
+export interface menuItems {
+  dashboard: menuItemData;
+  users?: menuItemData;
+  setting: menuItemData;
+  logout: menuItemData;
+  orders?: menuItemData;
+  profile?: menuItemData;
+  notifications?: menuItemData;
+}
+
+export interface menuItemData {
+  name: string;
+  path: string;
+}

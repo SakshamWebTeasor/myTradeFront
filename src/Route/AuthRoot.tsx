@@ -6,6 +6,8 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../Component/Admin/Header";
 import Footer from "../Component/Admin/Footer";
+import SideBar from "../Component/Admin/SideBar";
+import { menuItems } from "../Interface";
 
 type Props = {};
 
@@ -14,6 +16,20 @@ function AuthRoot({}: Props) {
   const loginDetail = useSelector((state: any) => state.reducer.userLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const sideBarItems: menuItems = {
+    dashboard: {
+      name: "Dashboard",
+      path: "/admin/dashboard",
+    },
+    setting: {
+      name: "Profile",
+      path: "/admin/profile",
+    },
+    logout: {
+      name: "Logout",
+      path: "/login",
+    },
+  };
   useEffect(() => {
     if (loginToken) {
       const decodedToken = jwtDecode(loginToken);
@@ -45,9 +61,17 @@ function AuthRoot({}: Props) {
   }, [loginToken]);
   return (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      <div className="w-full flex">
+        <SideBar sideBarItems={sideBarItems} />
+        <div className="w-full h-full">
+          <Header />
+          <div className="min-h-96">
+            <Outlet />
+          </div>
+          <Footer />
+        </div>
+      </div>
+      {/* <SideBar /> */}
     </>
   );
 }
