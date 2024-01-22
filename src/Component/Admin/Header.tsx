@@ -19,7 +19,8 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isOpen, toggleSidebar, activePage, setActivePage } = useSideBarContext();
+  const { isOpen, toggleSidebar, activePage, setActivePage } =
+    useSideBarContext();
   const [mySideBarOpen, setMySideBarOpen] = useState<boolean>(!isOpen);
   useEffect(() => {
     setTimeout(() => {
@@ -50,7 +51,8 @@ const Header: React.FC<HeaderProps> = ({}) => {
             className="text-white hover:text-gray-300"
             onClick={() => {
               dispatch(logout());
-              showSwal("Loggin Out", "", 200, () => navigate("/"));
+              localStorage.setItem("myProcess", "logout");
+              showSwal("Logged Out", "", 200, () => navigate("/login"));
             }}
           >
             Logout

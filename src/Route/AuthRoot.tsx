@@ -82,7 +82,12 @@ function AuthRoot({}: Props) {
     } else {
       console.log("No Token Found");
       dispatch(logout());
-      showSwal("No Token Found", "Loggin Out", 400, () => navigate("/login"));
+      if (localStorage.getItem("myProcess") == "logout") {
+        showSwal("Loggin Out", "", 200, () => navigate("/login"));
+        localStorage.removeItem("myProcess");
+      } else {
+        showSwal("No Token Found", "Loggin Out", 400, () => navigate("/login"));
+      }
     }
   }, [loginToken]);
   return (
