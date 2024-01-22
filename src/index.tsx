@@ -13,6 +13,7 @@ import ThemeProvider from "./ThemeProvider";
 import Register from "./Component/Public/Register";
 import SideBarProvider from "./SideBarProvider";
 import LandingPage from "./Component/Public/Pages";
+import Users from "./Component/Admin/Pages/Users";
 
 const SideBarProviderRoot = () => <SideBarProvider><AuthRoot /></SideBarProvider>;
 
@@ -71,7 +72,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/users",
-            element: <>Users</>,
+            element: <Users />,
           },
         ],
       },

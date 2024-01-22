@@ -13,7 +13,7 @@ type Props = {
 };
 
 function SideBar({ sideBarItems }: Props) {
-  const { isOpen, toggleSidebar } = useSideBarContext();
+  const { isOpen, toggleSidebar, activePage, setActivePage } = useSideBarContext();
   const [mySideBarOpen, setMySideBarOpen] = useState<Boolean>(!isOpen);
   const dispatch = useDispatch();
   const sideBarRef = useRef<HTMLDivElement>(null);
@@ -57,6 +57,7 @@ function SideBar({ sideBarItems }: Props) {
                   if (sideBarItemData.name === "Logout") {
                     dispatch(logout());
                   }
+                  setActivePage(sideBarItemData.name)
                 }}
               >
                 {sideBarItemData.name}

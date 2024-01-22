@@ -19,7 +19,7 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isOpen, toggleSidebar } = useSideBarContext();
+  const { isOpen, toggleSidebar, activePage, setActivePage } = useSideBarContext();
   const [mySideBarOpen, setMySideBarOpen] = useState<boolean>(!isOpen);
   useEffect(() => {
     setTimeout(() => {
@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
               icon={faEllipsisVertical}
             />
           </span>
-          Dashboard
+          {activePage}
         </div>
         <div className="flex items-center space-x-4">
           <a
