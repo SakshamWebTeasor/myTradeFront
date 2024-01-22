@@ -75,7 +75,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
+      { 
         path: "/superAdmin",
         element: <SideBarProviderRoot />,
       },
