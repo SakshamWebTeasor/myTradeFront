@@ -11,6 +11,9 @@ import OpenRoot from "./Route/OpenRoot";
 import TextAlert from "./Component/TextAlert";
 import ThemeProvider from "./ThemeProvider";
 import Register from "./Component/Public/Register";
+import SideBarProvider from "./SideBarProvider";
+
+const SideBarProviderRoot = () => <SideBarProvider><AuthRoot /></SideBarProvider>;
 
 const router = createBrowserRouter([
   {
@@ -28,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/user",
-        element: <AuthRoot />,
+        element: <SideBarProviderRoot />,
         children: [
           {
             path: "/user",
@@ -43,7 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <AuthRoot />,
+        element: <SideBarProviderRoot />,
         children: [
           {
             path: "/admin",
@@ -57,7 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/superAdmin",
-        element: <AuthRoot />,
+        element: <SideBarProviderRoot />,
       },
     ],
   },
