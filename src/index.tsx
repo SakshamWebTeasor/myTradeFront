@@ -12,6 +12,7 @@ import TextAlert from "./Component/TextAlert";
 import ThemeProvider from "./ThemeProvider";
 import Register from "./Component/Public/Register";
 import SideBarProvider from "./SideBarProvider";
+import LandingPage from "./Component/Public/Pages";
 
 const SideBarProviderRoot = () => <SideBarProvider><AuthRoot /></SideBarProvider>;
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     element: <OpenRoot />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "/",
+        element: <LandingPage />,
+      },
       {
         path: "/login",
         element: <Login />,
@@ -54,7 +59,19 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/dashboard",
-            element: <>Hii4</>,
+            element: <>Admin Dashboard</>,
+          },
+          {
+            path: "/admin/profile",
+            element: <>Profile</>,
+          },
+          {
+            path: "/admin/setting",
+            element: <>Setting</>,
+          },
+          {
+            path: "/admin/users",
+            element: <>Users</>,
           },
         ],
       },

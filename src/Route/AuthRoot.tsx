@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "../Component/Admin/Header";
 import Footer from "../Component/Admin/Footer";
 import SideBar from "../Component/Admin/SideBar";
-import { menuItems } from "../Interface";
+import { menuItemData, menuItems } from "../Interface";
 
 type Props = {};
 
@@ -16,19 +16,45 @@ function AuthRoot({}: Props) {
   const loginDetail = useSelector((state: any) => state.reducer.userLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const sideBarItems: menuItems = {
+  let sideBarItems: menuItems = {
     dashboard: {
       name: "Dashboard",
-      path: "/admin/dashboard",
+      path: `/${window.location.pathname.split("/")[1]}/dashboard`,
     },
-    setting: {
-      name: "Profile",
-      path: "/admin/profile",
-    },
-    logout: {
-      name: "Logout",
-      path: "/login",
-    },
+    // setting: {
+    //   name: "Setting",
+    //   path: `/${window.location.pathname.split("/")[1]}/setting`,
+    // },
+    // logout: {
+    //   name: "Logout",
+    //   path: "/login",
+    // }
+  };
+  const logouts: menuItemData = {
+    name: "Logout",
+    path: "/login",
+  };
+  const setting: menuItemData = {
+    name: "Setting",
+    path: `/${window.location.pathname.split("/")[1]}/setting`,
+  };
+  const additionToSideBar = () => {
+    if (loginDetail) {
+      switch (loginDetail.role) {
+        case "superAdmin":
+          sideBarItems.users = {
+            name: "Users",
+            path: "/admin/users",
+          };
+          break;
+        case "admin":
+          break;
+        case "user":
+          break;
+      }
+      sideBarItems = { ...sideBarItems, setting, logout: logouts };
+    }
+    return sideBarItems;
   };
   useEffect(() => {
     if (loginToken) {
@@ -62,7 +88,7 @@ function AuthRoot({}: Props) {
   return (
     <>
       <div className="w-full flex">
-        <SideBar sideBarItems={sideBarItems} />
+        <SideBar sideBarItems={additionToSideBar()} />
         <div className="w-full h-full">
           <Header />
           <div className="min-h-96">

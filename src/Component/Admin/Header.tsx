@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ButtonMemo from "./EasyDev/ButtonMemo";
 import ButtonRef from "./EasyDev/ButtonRef";
 import ButtonUseContext from "./EasyDev/ButtonUseContext";
@@ -12,6 +12,7 @@ import { showSwal } from "../ShowAlert";
 import { useSideBarContext } from "../../SideBarProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import "./Admin.css";
 
 interface HeaderProps {}
 
@@ -19,6 +20,12 @@ const Header: React.FC<HeaderProps> = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isOpen, toggleSidebar } = useSideBarContext();
+  const [mySideBarOpen, setMySideBarOpen] = useState<boolean>(!isOpen);
+  useEffect(() => {
+    setTimeout(() => {
+      setMySideBarOpen(isOpen);
+    }, 150);
+  }, [isOpen]);
   return (
     <>
       {/* <ButtonMemo /> */}
@@ -29,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
       {/* <CallbackUse /> */}
       <header className="bg-gray-800 text-white p-4 justify-between flex">
         <div className="text-2xl font-bold">
-          <span hidden={isOpen} className="mx-3">
+          <span hidden={mySideBarOpen} className="mr-3">
             <FontAwesomeIcon
               onClick={toggleSidebar}
               icon={faEllipsisVertical}

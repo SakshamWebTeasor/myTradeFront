@@ -51,11 +51,11 @@ export interface registerUserErr {
 export interface menuItems {
   dashboard: menuItemData;
   users?: menuItemData;
-  setting: menuItemData;
-  logout: menuItemData;
   orders?: menuItemData;
   profile?: menuItemData;
   notifications?: menuItemData;
+  setting?: menuItemData;
+  logout?: menuItemData;
 }
 
 export interface menuItemData {
