@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/action";
 import { showSwal } from "../ShowAlert";
-import { useSideBarContext } from "../../SideBarProvider";
+import { useSideBarContext } from "../../Providers/SideBarProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import "./Admin.css";

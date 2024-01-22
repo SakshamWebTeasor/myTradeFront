@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../redux/action";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleLeft } from "@fortawesome/free-solid-svg-icons";
-import { useSideBarContext } from "../../SideBarProvider";
+import { useSideBarContext } from "../../Providers/SideBarProvider";
 import "./Admin.css";
 import { showSwal } from "../ShowAlert";
 
