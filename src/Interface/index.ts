@@ -3,6 +3,7 @@ export enum role {
   admin = "admin",
   superAdmin = "superAdmin",
 }
+
 export interface User {
   name: string;
   gender?: string;
@@ -12,8 +13,8 @@ export interface User {
   pan_no?: string;
   role: role;
   mobile: number;
+  _id?: string
 }
-
 
 export interface loginUserApi {
   email: string;
@@ -61,4 +62,8 @@ export interface menuItems {
 export interface menuItemData {
   name: string;
   path: string;
+}
+
+export interface AuthSimpleGetFecth {
+  token: string;
 }

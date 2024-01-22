@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/action";
 import { showSwal } from "../ShowAlert";
-import { useSideBarContext } from "../../SideBarProvider";
+import { useSideBarContext } from "../../Providers/SideBarProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import "./Admin.css";
@@ -19,7 +19,8 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isOpen, toggleSidebar } = useSideBarContext();
+  const { isOpen, toggleSidebar, activePage, setActivePage } =
+    useSideBarContext();
   const [mySideBarOpen, setMySideBarOpen] = useState<boolean>(!isOpen);
   useEffect(() => {
     setTimeout(() => {
@@ -42,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
               icon={faEllipsisVertical}
             />
           </span>
-          Dashboard
+          {activePage}
         </div>
         <div className="flex items-center space-x-4">
           <a
@@ -50,7 +51,8 @@ const Header: React.FC<HeaderProps> = ({}) => {
             className="text-white hover:text-gray-300"
             onClick={() => {
               dispatch(logout());
-              showSwal("Loggin Out", "", 200, () => navigate("/"));
+              localStorage.setItem("myProcess", "logout");
+              showSwal("Logged Out", "", 200, () => navigate("/login"));
             }}
           >
             Logout

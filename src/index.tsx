@@ -9,12 +9,21 @@ import ErrorPage from "./ErrorPage";
 import AuthRoot from "./Route/AuthRoot";
 import OpenRoot from "./Route/OpenRoot";
 import TextAlert from "./Component/TextAlert";
-import ThemeProvider from "./ThemeProvider";
+import ThemeProvider from "./Providers/ThemeProvider";
 import Register from "./Component/Public/Register";
-import SideBarProvider from "./SideBarProvider";
+import SideBarProvider from "./Providers/SideBarProvider";
 import LandingPage from "./Component/Public/Pages";
+import Users from "./Component/Admin/Pages/Users";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const SideBarProviderRoot = () => <SideBarProvider><AuthRoot /></SideBarProvider>;
+const queryClient = new QueryClient();
+
+const SideBarProviderRoot = () => (
+  <SideBarProvider>
+    <AuthRoot />
+  </SideBarProvider>
+);
 
 const router = createBrowserRouter([
   {
@@ -71,7 +80,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/admin/users",
-            element: <>Users</>,
+            element: <Users />,
           },
         ],
       },
@@ -87,11 +96,14 @@ const portalDiv = document.getElementById("root")!;
 
 ReactDOM.createRoot(portalDiv).render(
   // <React.StrictMode>
-  <Provider store={store}>
-    <ThemeProvider>
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </Provider>
+  <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <ReactQueryDevtools />
+      </ThemeProvider>
+    </Provider>
+  </QueryClientProvider>
   // </React.StrictMode>
 );
 
