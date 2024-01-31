@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { register } from "../../Api";
-import { registerUserApi, registerUserErr } from "../../Interface";
+import { registerUserApi, registerUserErr, role } from "../../Interface";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/action";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,120 @@ import {
   isValidPan,
   isValidPassword,
 } from "../Validation/Validations";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+export const handleRegisterInputChange = (
+  field: keyof registerUserApi,
+  value: string,
+  setRegisterDetails: (value: React.SetStateAction<registerUserApi>) => void,
+  setRegisterDetailsErr: (value: React.SetStateAction<registerUserErr>) => void
+) => {
+  switch (field) {
+    case "fname":
+      setRegisterDetails((prevDetails) => {
+        let lastName = prevDetails.name.split(" ")[1];
+        return {
+          ...prevDetails,
+          name: value + " " + lastName,
+        };
+      });
+      break;
+    case "lname":
+      setRegisterDetails((prevDetails) => {
+        let firstName = prevDetails.name.split(" ")[0];
+        return {
+          ...prevDetails,
+          name: firstName + " " + value,
+        };
+      });
+      break;
+    case "mobile_no":
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        mobile_no: parseInt(value),
+      }));
+      setRegisterDetailsErr((prevDetails) => ({
+        ...prevDetails,
+        mobile_no: isValidMobile(value),
+      }));
+      break;
+    case "email":
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        email: value,
+      }));
+      setRegisterDetailsErr((prevDetails) => ({
+        ...prevDetails,
+        email: isValidEmail(value),
+      }));
+      break;
+    case "aadhar_no":
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        aadhar_no: value,
+      }));
+      setRegisterDetailsErr((prevDetails) => ({
+        ...prevDetails,
+        aadhar_no: isValidAadhar(value),
+      }));
+      break;
+    case "pan_no":
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        pan_no: value,
+      }));
+      setRegisterDetailsErr((prevDetails) => ({
+        ...prevDetails,
+        pan_no: isValidPan(value),
+      }));
+      break;
+    case "password":
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        password: value,
+      }));
+      setRegisterDetailsErr((prevDetails) => ({
+        ...prevDetails,
+        password: isValidPassword(value),
+      }));
+      break;
+    case "confirmPassword":
+      let password:any
+      setRegisterDetails((prevDetails) => {
+        password = prevDetails.password
+        return {
+        ...prevDetails,
+        confirmPassword: value,
+      }});
+      setRegisterDetailsErr((prevDetails) => {
+        console.log('prevDetails.password, value',prevDetails, password);
+        return {
+          ...prevDetails,
+          confirmPassword:
+          password === value ? "" : "Password does not match",
+        };
+      });
+      break;
+    case "role":
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        role: value == role.admin ? role.admin : role.user,
+      }));
+      setRegisterDetailsErr((prevDetails) => ({
+        ...prevDetails,
+        confirmPassword:
+          prevDetails.password === value ? "" : "Password does not match",
+      }));
+      break;
+    default:
+      setRegisterDetails((prevDetails) => ({
+        ...prevDetails,
+        [field]: value,
+      }));
+      break;
+  }
+};
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -78,96 +192,6 @@ const Register = () => {
     }
   };
 
-  const handleInputChange = (field: keyof registerUserApi, value: string) => {
-    switch (field) {
-      case "fname":
-        setRegisterDetails((prevDetails) => {
-          let lastName = prevDetails.name.split(" ")[1];
-          return {
-            ...prevDetails,
-            name: value + " " + lastName,
-          };
-        });
-        break;
-      case "lname":
-        setRegisterDetails((prevDetails) => {
-          let firstName = prevDetails.name.split(" ")[0];
-          return {
-            ...prevDetails,
-            name: firstName + " " + value,
-          };
-        });
-        break;
-      case "mobile_no":
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          mobile_no: parseInt(value),
-        }));
-        setRegisterDetailsErr((prevDetails) => ({
-          ...prevDetails,
-          mobile_no: isValidMobile(value),
-        }));
-        break;
-      case "email":
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          email: value,
-        }));
-        setRegisterDetailsErr((prevDetails) => ({
-          ...prevDetails,
-          email: isValidEmail(value),
-        }));
-        break;
-      case "aadhar_no":
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          aadhar_no: value,
-        }));
-        setRegisterDetailsErr((prevDetails) => ({
-          ...prevDetails,
-          aadhar_no: isValidAadhar(value),
-        }));
-        break;
-      case "pan_no":
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          pan_no: value,
-        }));
-        setRegisterDetailsErr((prevDetails) => ({
-          ...prevDetails,
-          pan_no: isValidPan(value),
-        }));
-        break;
-      case "password":
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          password: value,
-        }));
-        setRegisterDetailsErr((prevDetails) => ({
-          ...prevDetails,
-          password: isValidPassword(value),
-        }));
-        break;
-      case "confirmPassword":
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          confirmPassword: value,
-        }));
-        setRegisterDetailsErr((prevDetails) => ({
-          ...prevDetails,
-          confirmPassword:
-            registerDetails.password === value ? "" : "Password does not match",
-        }));
-        break;
-      default:
-        setRegisterDetails((prevDetails) => ({
-          ...prevDetails,
-          [field]: value,
-        }));
-        break;
-    }
-  };
-
   return (
     <div className="bg-gray-100 min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-md w-1/4">
@@ -186,7 +210,14 @@ const Register = () => {
                   type="text"
                   id="fname"
                   name="fname"
-                  onChange={(e) => handleInputChange("fname", e.target.value)}
+                  onChange={(e) =>
+                    handleRegisterInputChange(
+                      "fname",
+                      e.target.value,
+                      setRegisterDetails,
+                      setRegisterDetailsErr
+                    )
+                  }
                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 />
               </div>
@@ -203,7 +234,14 @@ const Register = () => {
                   type="text"
                   id="lname"
                   name="lname"
-                  onChange={(e) => handleInputChange("lname", e.target.value)}
+                  onChange={(e) =>
+                    handleRegisterInputChange(
+                      "lname",
+                      e.target.value,
+                      setRegisterDetails,
+                      setRegisterDetailsErr
+                    )
+                  }
                   className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 />
               </div>
@@ -220,7 +258,14 @@ const Register = () => {
               type="email"
               id="email"
               name="email"
-              onChange={(e) => handleInputChange("email", e.target.value)}
+              onChange={(e) =>
+                handleRegisterInputChange(
+                  "email",
+                  e.target.value,
+                  setRegisterDetails,
+                  setRegisterDetailsErr
+                )
+              }
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
             <p id="emailError" className="text-red-500">
@@ -238,7 +283,14 @@ const Register = () => {
               type="number"
               id="mobile_no"
               name="mobile_no"
-              onChange={(e) => handleInputChange("mobile_no", e.target.value)}
+              onChange={(e) =>
+                handleRegisterInputChange(
+                  "mobile_no",
+                  e.target.value,
+                  setRegisterDetails,
+                  setRegisterDetailsErr
+                )
+              }
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
             <p id="mobileError" className="text-red-500">
@@ -258,7 +310,14 @@ const Register = () => {
                 id="gender"
                 name="gender"
                 value={registerDetails.gender}
-                onChange={(e) => handleInputChange("gender", e.target.value)}
+                onChange={(e) =>
+                  handleRegisterInputChange(
+                    "gender",
+                    e.target.value,
+                    setRegisterDetails,
+                    setRegisterDetailsErr
+                  )
+                }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               >
                 <option value="">Select Gender</option>
@@ -279,7 +338,14 @@ const Register = () => {
               type="number"
               id="aadhar_no"
               name="aadhar_no"
-              onChange={(e) => handleInputChange("aadhar_no", e.target.value)}
+              onChange={(e) =>
+                handleRegisterInputChange(
+                  "aadhar_no",
+                  e.target.value,
+                  setRegisterDetails,
+                  setRegisterDetailsErr
+                )
+              }
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
             <p id="mobileError" className="text-red-500">
@@ -298,7 +364,14 @@ const Register = () => {
               type="text"
               id="pan_no"
               name="pan_no"
-              onChange={(e) => handleInputChange("pan_no", e.target.value)}
+              onChange={(e) =>
+                handleRegisterInputChange(
+                  "pan_no",
+                  e.target.value,
+                  setRegisterDetails,
+                  setRegisterDetailsErr
+                )
+              }
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
             <p id="mobileError" className="text-red-500">
@@ -317,14 +390,25 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
-                onChange={(e) => handleInputChange("password", e.target.value)}
+                onChange={(e) =>
+                  handleRegisterInputChange(
+                    "password",
+                    e.target.value,
+                    setRegisterDetails,
+                    setRegisterDetailsErr
+                  )
+                }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               />
               <div
                 onClick={togglePasswordVisibility}
                 className="p-2 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                ) : (
+                  <FontAwesomeIcon icon={faEye} />
+                )}
               </div>
             </div>
             <p id="mobileError" className="text-red-500">
@@ -345,15 +429,24 @@ const Register = () => {
                 id="confirmPassword"
                 name="confirmPassword"
                 onChange={(e) =>
-                  handleInputChange("confirmPassword", e.target.value)
+                  handleRegisterInputChange(
+                    "confirmPassword",
+                    e.target.value,
+                    setRegisterDetails,
+                    setRegisterDetailsErr
+                  )
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
               />
               <div
                 onClick={togglePasswordVisibility}
-                className="p-2 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none"
+                className="p-2 bg-gray-200 rounded hover:bg-gray-300 focus:outline-none ml-2"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                ) : (
+                  <FontAwesomeIcon icon={faEye} />
+                )}
               </div>
             </div>
             <p id="mobileError" className="text-red-500">

@@ -31,8 +31,9 @@ export interface registerUserApi {
   mobile_no: number;
   password: string;
   confirmPassword: string;
-  fname?:string
-  lname?:string
+  fname?:string;
+  lname?:string;
+  role?: role;
 }
 
 export interface registerUserErr {

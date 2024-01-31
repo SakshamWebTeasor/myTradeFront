@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import { showSwal } from "../../ShowAlert";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
+// import { useSideBarContext } from "../../../Providers/SideBarProvider";
 
 type Props = {};
 
@@ -57,10 +59,18 @@ const UsersData = () => {
 };
 
 function Users({}: Props) {
+  // const { isOpen, toggleSidebar, activePage, setActivePage, path } =
+  //   useSideBarContext();
+  const navigate = useNavigate();
   return (
     <div className="container mx-auto p-4">
       <div className="w-full flex justify-end mb-3">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => {
+            navigate(`${window.location.pathname}/add`);
+          }}
+        >
           Add New User
         </button>
       </div>

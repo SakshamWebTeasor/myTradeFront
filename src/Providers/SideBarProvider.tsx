@@ -1,7 +1,11 @@
 import { useState, createContext, useContext, ReactNode } from "react";
 
-const SideBarContext = createContext<{ isOpen: boolean; toggleSidebar: () => void; activePage:string; setActivePage: (pageToActivate:string) => void }>(
-  { isOpen: true, toggleSidebar: () => {}, activePage:"", setActivePage: ()=> {} }
+const SideBarContext = createContext<{ isOpen: boolean; toggleSidebar: () => void; activePage:string; setActivePage: (pageToActivate:string) => void, 
+  // path: string
+ }>(
+  { isOpen: true, toggleSidebar: () => {}, activePage:"", setActivePage: ()=> {}, 
+  // path: "" 
+  }
 );
 
 export function useSideBarContext() {
@@ -20,7 +24,9 @@ function SideBarProvider({ children }: Props) {
   }
   return (
     <>
-      <SideBarContext.Provider value={{ isOpen, toggleSidebar, activePage, setActivePage }}>
+      <SideBarContext.Provider value={{ isOpen, toggleSidebar, activePage, setActivePage, 
+        // path: window.location.pathname 
+        }}>
         {children}
       </SideBarContext.Provider>
     </>

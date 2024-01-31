@@ -16,6 +16,7 @@ import LandingPage from "./Component/Public/Pages";
 import Users from "./Component/Admin/Pages/Users";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AddUser from "./Component/Admin/Pages/AddUser";
 
 const queryClient = new QueryClient();
 
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
           {
             path: "/admin/users",
             element: <Users />,
+          },
+          {
+            path: "/admin/users/add",
+            element: <AddUser />,
           },
         ],
       },

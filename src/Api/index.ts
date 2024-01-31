@@ -14,3 +14,4 @@ export const api = (token: string|undefined) => axios.create({
 export const login = (data: loginUserApi) => api(undefined).post("/api/login", data)
 export const register = (data: registerUserApi) => api(undefined).post("/api/register", data)
 export const getAdminUsers = (data: AuthSimpleGetFecth) => api(data.token).get("/api/admin/getUsers").then((data)=> data.data)
+// export const adminRegisters = (data: registerUserApi) => api(data.token).post("/api/admin/register", data)
